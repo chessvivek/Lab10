@@ -20,7 +20,13 @@ public class Sorting {
     private static final int SORT_INCREMENT = 10000;
 
     /** Total number of values to try. */
-    private static final int TOTAL_SORT_VALUES = 100;
+    private static final int TOTAL_SORT_VALUES = 6;
+
+    private static void swap(int i, int j, final int[] arr) {
+        int t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+    }
 
     /** Total data size. */
     private static final int TOTAL_INTEGER_VALUES = 1000000;
@@ -28,12 +34,26 @@ public class Sorting {
     /**
      * Bubble sort.
      *
-     * @param array unsorted input array
+     * @param arr unsorted input array
      * @return the sorted array, or null on failure
      */
     @SuppressWarnings("unused")
-    private static int[] bubbleSort(final int[] array) {
-        return null;
+    private static int[] bubbleSort(final int[] arr) {
+        int[] array = arr;
+
+        if (arr == null) {
+            return null;
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 1; j < array.length; j++) {
+                if (array[j] < array[j - 1]) {
+                    swap(j, j - 1, array);
+                }
+            }
+        }
+
+        return array;
     }
 
     /**
@@ -44,7 +64,20 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] selectionSort(final int[] array) {
-        return null;
+        if (array == null) {
+            return null;
+        }
+        int[] arr = array;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[i]) {
+                    int t = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = t;
+                }
+            }
+        }
+        return arr;
     }
 
     /**
@@ -55,7 +88,20 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] mergeSort(final int[] array) {
-        return null;
+        if (array.length == 1) {
+            return array;
+        }
+        int[] arr1 = new int[array.length/2];
+        int[] arr2 = new int[array.length - array.length/2];
+        for (int i = 0; i < array.length/2 ;i++) {
+            arr1[i] = array[i];
+        }
+        for (int i = 0; i < arr2.length; i++) {
+            arr2[i] = array[i + array.length/2];
+        }
+        int[] sorted1 = mergeSort(arr1);
+        int[] sorted2 = mergeSort(arr2);
+        return merge(sorted1, sorted2);
     }
 
     /**
